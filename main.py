@@ -18,6 +18,7 @@ def Loop():
     dirref_c = dirref.readlines()
     dirref_t = dirref_c[1].replace('\n', '')
     dirref.close()
+    penalty = 100
 
     def header(filename):
         ms_header = open(filename)
@@ -234,8 +235,7 @@ def Loop():
                     c = mz[a]
                     tga_ms_quan_1['SumMasses'] = tga_ms_quan_1['SumMasses'] + tga_ms_quan_1[c]
 
-                tga_ms_quan_1['Difference**2'] = (tga_ms_quan_1['Smoothed_Diff/mgs-1'] - tga_ms_quan_1[
-                    'SumMasses']) ** 2
+                tga_ms_quan_1['Difference**2'] = (tga_ms_quan_1['Smoothed_Diff/mgs-1'] - tga_ms_quan_1['SumMasses']) ** 2
 
                 negative_sum = 0
                 for a in range(0, numberofmasses):
@@ -246,7 +246,6 @@ def Loop():
                         negative_sum_1 = negative.sum()
                         negative_sum += negative_sum_1
 
-                penalty = 10
                 Sum = tga_ms_quan_1['Difference**2'].sum() + (penalty * negative_sum)
 
                 return Sum
@@ -502,7 +501,6 @@ def Loop():
                 negative_sum_1 = negative.sum()
                 negative_sum += negative_sum_1
 
-        penalty = 10
         Sum = tga_ms_quan_1['Difference**2'].sum() + (penalty * negative_sum)
 
         return Sum
