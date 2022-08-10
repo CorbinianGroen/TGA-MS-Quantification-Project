@@ -19,6 +19,7 @@ def Loop():
     dirref_t = dirref_c[1].replace('\n', '')
     dirref.close()
     penalty = 100
+    penalty1 = 1e+12
 
     def header(filename):
         ms_header = open(filename)
@@ -222,6 +223,11 @@ def Loop():
 
             # Quantification
             x0_2 = np.ones(numberofmasses * 2)
+            const = []
+            for a in range(numberofmasses):
+                constraint = [(float(0), float(1)), (None, None)]
+                const += constraint
+
 
             def func(x):
                 tga_ms_quan_1 = tga_ms_smooth.loc[:, 'time/s':'Smoothed_Diff/mgs-1']
@@ -246,12 +252,24 @@ def Loop():
                         negative_sum_1 = negative.sum()
                         negative_sum += negative_sum_1
 
-                Sum = tga_ms_quan_1['Difference**2'].sum() + (penalty * negative_sum)
+                negative_scaling = 0
+                for a in range(0, numberofmasses):
+                    b = x[a * 2]
+                    if b < float(0):
+                        negative = b ** 2
+                        negative_scaling += negative
 
+                Sum = tga_ms_quan_1['Difference**2'].sum() + (penalty * negative_sum) + (penalty1 * negative_scaling)
+                print(Sum)
                 return Sum
 
             global f
             f = minimize(func, x0=x0_2, method='SLSQP')
+            x0_2 = f.x
+            f = minimize(func, x0=x0_2, method='SLSQP')
+            x0_2 = f.x
+            f = minimize(func, x0=x0_2, method='SLSQP')
+
             tga_ms_quan = tga_ms_smooth.loc[:, 'time/s':'Smoothed_Diff/mgs-1']
 
             for x in range(0, numberofmasses):
@@ -501,7 +519,14 @@ def Loop():
                 negative_sum_1 = negative.sum()
                 negative_sum += negative_sum_1
 
-        Sum = tga_ms_quan_1['Difference**2'].sum() + (penalty * negative_sum)
+        negative_scaling = 0
+        for a in range(0, numberofmasses):
+            b = x[a * 2]
+            if b < float(0):
+                negative = b ** 2
+                negative_scaling += negative
+
+        Sum = tga_ms_quan_1['Difference**2'].sum() + (penalty * negative_sum) + (penalty1 * negative_scaling)
 
         return Sum
 
