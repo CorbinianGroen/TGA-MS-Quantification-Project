@@ -260,7 +260,7 @@ def Loop():
                         negative_scaling += negative
 
                 Sum = tga_ms_quan_1['Difference**2'].sum() + (penalty * negative_sum) + (penalty1 * negative_scaling)
-                print(Sum)
+                #print(Sum)
                 return Sum
 
             global f
