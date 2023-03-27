@@ -288,12 +288,14 @@ def Loop():
             window.update_idletasks()
             time.sleep(0.3)
             window.destroy()
+            window.quit()
 
         else:
             pgBar['value'] = 100
             window.update_idletasks()
             time.sleep(0.3)
             window.destroy()
+            window.quit()
 
     Button(window, text='Finished', width=6, command=exit1).grid(row=6, column=1, sticky=E)
 
@@ -835,12 +837,7 @@ def Loop():
     cons_factor.on_changed(pressed)
     cons_factor_2.on_changed(pressed)
 
-    # create exit button
-    def exit8():
-        window.destroy()
 
-    Save = Button(window, text='Save', width=6, command=exit8)
-    Save.grid(row=numberofmasses * 2 + 5, column=4, sticky=W)
 
     Quantification = Entry(window, width=20, bg='lightgrey')
     Quantification.grid(row=1, column=2, sticky=W)
@@ -897,6 +894,15 @@ def Loop():
         exit()
 
     window.protocol("WM_DELETE_WINDOW", on_closing)
+
+    # create exit button
+    def exit8():
+        window.destroy()
+        window.quit()
+
+    Save = Button(window, text='Save', width=6, command=exit8)
+    Save.grid(row=numberofmasses * 2 + 5, column=4, sticky=W)
+
 
     window.mainloop()
 
@@ -1017,6 +1023,7 @@ def Loop():
         global x7
         x7 = 0
         window.destroy()
+        window.quit()
 
     Button(window, text='Save + Do Another', width=17, command=exit3).grid(row=2, column=1, sticky=E, pady=20)
 
