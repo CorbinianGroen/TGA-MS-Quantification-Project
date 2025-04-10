@@ -739,12 +739,12 @@ def Loop():
 
         x_int = tga_ms_quan['time/s'].iloc[cons2:cons]
         y_int = tga_ms_quan['Smoothed_Diff/mgs-1'].iloc[cons2:cons]
-        diff_int = np.trapz(x=x_int, y=y_int)
+        diff_int = np.trapezoid(x=x_int, y=y_int)
         tga_int.insert(0, diff_int)
         for x in range(0, numberofmasses):
             a = mz[x]
             y_int_ms = tga_ms_quan[a].iloc[cons2:cons]
-            diff_int_ms = np.trapz(x=x_int, y=y_int_ms)
+            diff_int_ms = np.trapezoid(x=x_int, y=y_int_ms)
             k['intentry_{0}'.format(x)].insert(0, diff_int_ms)
 
     Integrate = Button(window, text='Integrate', width=6, command=integrate)
@@ -790,13 +790,13 @@ def Loop():
                 tga_int.delete(0, 'end')
                 x_int = tga_ms_quan['time/s'].iloc[cons2:cons]
                 y_int = tga_ms_quan['Smoothed_Diff/mgs-1'].iloc[cons2:cons]
-                diff_int = np.trapz(x=x_int, y=y_int)
+                diff_int = np.trapezoid(x=x_int, y=y_int)
                 tga_int.insert(0, diff_int)
                 for x in range(0, numberofmasses):
                     a = mz[x]
                     k['intentry_{0}'.format(x)].delete(0, 'end')
                     y_int_ms = tga_ms_quan[a].iloc[cons2:cons]
-                    diff_int = np.trapz(x=x_int, y=y_int_ms)
+                    diff_int = np.trapezoid(x=x_int, y=y_int_ms)
                     k['intentry_{0}'.format(x)].insert(0, diff_int)
 
             else:
@@ -975,14 +975,14 @@ def Loop():
         cons2 = cons_factor_2.val
         x_int = tga_ms_quan['time/s'].iloc[cons2:cons]
         y_int = tga_ms_quan['Smoothed_Diff/mgs-1'].iloc[cons2:cons]
-        diff_int = np.trapz(x=x_int, y=y_int)
+        diff_int = np.trapezoid(x=x_int, y=y_int)
         results = pd.DataFrame(
             {'name': ['weightloss/mg : ', 'weightloss/% : ', 'area_tga_diff/mg : ', 'area_tga_diff/% : '],
              'result': [massloss, massloss_perc, diff_int, (diff_int / max_weight) * 100]})
         for x in range(0, numberofmasses):
             a = mz[x]
             y_int_ms = tga_ms_quan[a].iloc[cons2:cons]
-            diff_int_ms = np.trapz(x=x_int, y=y_int_ms)
+            diff_int_ms = np.trapezoid(x=x_int, y=y_int_ms)
             results.loc[len(results.index)] = ['{0}/mg : '.format(a), diff_int_ms]
             results.loc[len(results.index)] = ['{0}/% : '.format(a), (diff_int_ms / max_weight) * 100]
         for x in range(0, numberofmasses):
@@ -1017,14 +1017,14 @@ def Loop():
         cons2 = cons_factor_2.val
         x_int = tga_ms_quan['time/s'].iloc[cons2:cons]
         y_int = tga_ms_quan['Smoothed_Diff/mgs-1'].iloc[cons2:cons]
-        diff_int = np.trapz(x=x_int, y=y_int)
+        diff_int = np.trapezoid(x=x_int, y=y_int)
         results = pd.DataFrame(
             {'name': ['weightloss/mg : ', 'weightloss/% : ', 'area_tga_diff/mg : ', 'area_tga_diff/% : '],
              'result': [massloss, massloss_perc, diff_int, (diff_int / max_weight) * 100]})
         for x in range(0, numberofmasses):
             a = mz[x]
             y_int_ms = tga_ms_quan[a].iloc[cons2:cons]
-            diff_int_ms = np.trapz(x=x_int, y=y_int_ms)
+            diff_int_ms = np.trapezoid(x=x_int, y=y_int_ms)
             results.loc[len(results.index)] = ['{0}/mg : '.format(a), diff_int_ms]
             results.loc[len(results.index)] = ['{0}/% : '.format(a), (diff_int_ms / max_weight) * 100]
         for x in range(0, numberofmasses):
